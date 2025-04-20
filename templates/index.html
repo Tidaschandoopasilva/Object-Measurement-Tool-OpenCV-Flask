@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Object Measurement Tool</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://kit.fontawesome.com/a2e0d3b23b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="text-center mb-4">
+      <h1><i class="fas fa-ruler-combined"></i> Object Measurement Tool</h1>
+      <p class="text-muted">Upload an image with an A4 sheet to detect object dimensions.</p>
+    </div>
+
+    <div class="row">
+      <!-- Left Column: Upload and Info -->
+      <div class="col-md-5">
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+          <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="imageUpload" name="image" required onchange="this.form.submit();">
+            <label class="custom-file-label" for="imageUpload"><i class="fas fa-upload"></i> Choose Image</label>
+          </div>
+        </form>
+
+        {% if result %}
+          <div class="card p-3">
+            <h5 class="card-title text-center"><i class="fas fa-info-circle"></i> Object Details</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Width:</strong> {{ result.width }} mm</li>
+              <li class="list-group-item"><strong>Height:</strong> {{ result.height }} mm</li>
+              <li class="list-group-item"><strong>Area:</strong> {{ result.area }} mm²</li>
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right Column: Result Image -->
+      <div class="col-md-7">
+        {% if result %}
+          <div class="img-container text-center">
+            <img src="{{ url_for('static', filename='uploads/' ~ result.output) }}" class="img-fluid img-preview border" alt="Processed Image">
+          </div>
+        {% else %}
+          <div class="alert alert-info text-center" role="alert">
+            <i class="fas fa-image"></i> Your processed image will appear here after upload.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Bootstrap custom file input fix
+    $(".custom-file-input").on("change", function () {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+  </script>
+</body>
+</html>

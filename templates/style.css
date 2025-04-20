@@ -1,0 +1,24 @@
+body {
+  background-color: #f7f9fc;
+}
+
+h1 {
+  color: #333;
+}
+
+.custom-file-label {
+  cursor: pointer;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e3e3e3;
+}
+
+.img-preview {
+  max-height: 500px;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
